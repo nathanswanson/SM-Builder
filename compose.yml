@@ -1,0 +1,63 @@
+services:
+  caddy:
+    image: caddy:latest
+    container_name: rproxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./CaddyFile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - rproxy
+
+  webserver:
+    image: server_manager:latest
+    container_name: server-manager
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      DOCKER_HOST: tcp://docker-proxy:2375
+      DB_CONNECTION: sqlite:////data/dev.db
+      SM_STATIC_PATH: /data/static/
+    depends_on:
+      - docker-proxy
+    networks:
+      - dockernet
+      - rproxy
+    
+  docker-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: docker-socket-proxy
+    restart: always
+    ports:
+      - "2375:2375"  # Exposes proxy HTTP API on host (optional)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      CONTAINERS: "1"   # allow create/list/inspect/remove containers
+      IMAGES: "1"       # allow image operations
+      VOLUMES: "0"      # disallow volume operations (set 1 if needed)
+      NETWORKS: "1"     # allow network operations
+      SERVICES: "0"     # disallow swarm services (optional)
+      CONFIGS: "0"
+      SECRETS: "0"
+      SWARM: "0"
+      POST: "1"
+      EXEC: "1"
+    networks:
+      - dockernet
+
+networks:
+  rproxy:
+    driver: bridge
+  dockernet:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

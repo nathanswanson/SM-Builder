@@ -1,0 +1,6 @@
+*
+!Dockerfile
+!compose.yml
+!build.sh
+!.gitignore
+!.dockerignore

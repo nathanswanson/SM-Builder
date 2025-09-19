@@ -1,0 +1,17 @@
+*
+
+!*/src/**
+
+!*/package.json
+!*/tsconfig.json
+!*/vite.config.ts
+!*/public/**
+!*/tsconfig.app.json
+!*/tsconfig.node.json
+!*/index.html
+
+!*/pyproject.toml
+!*/README.md
+!*/ruff.toml
+
+!dev.db
