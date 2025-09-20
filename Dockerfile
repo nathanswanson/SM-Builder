@@ -46,7 +46,6 @@ COPY --from=backend-builder /app/dist/ /app/dist/
 RUN pipx install /app/dist/*.whl
 
 COPY --from=frontend-builder /app/dist/ /data/static/
-COPY ${DB_PATH} /data/dev.db
 
 EXPOSE 8000
 
