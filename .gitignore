@@ -5,3 +5,5 @@
 !.gitignore
 !.dockerignore
 !init.sql
+!README.md
+!CaddyFile
