@@ -1,6 +1,5 @@
 ################################## BACKEND ##################################
 FROM python:3.9.23-trixie AS backend-builder
-ARG WEBSERVER_PATH=backend
 ADD git@github.com:nathanswanson/server_manager.git /app/
 WORKDIR /app
 
@@ -15,9 +14,9 @@ RUN pipx run hatch build -t wheel
 
 ################################## FRONTEND ##################################
 FROM node:trixie-slim AS frontend-builder
-ARG FRONTEND_PATH=frontend
-ARG VITE_BACKEND_WEBSOCKET=wss://home.nathanswanson.online
-ARG VITE_BACKEND_HOST=https://home.nathanswanson.online
+ARG VITE_BACKEND_WEBSOCKET
+ARG VITE_BACKEND_HOST
+RUN echo ${VITE_BACKEND_HOST}
 WORKDIR /app
 ADD git@github.com:nathanswanson/frontend.git /app/
 # install dependencies
@@ -27,11 +26,10 @@ RUN apt-get upgrade -y
 
 
 RUN npm install
-RUN npm run build
+RUN VITE_BACKEND_WEBSOCKET=${VITE_BACKEND_WEBSOCKET} VITE_BACKEND_HOST=${VITE_BACKEND_HOST} npm run build
 
 ################################## BASE ##################################
 FROM ubuntu:25.04
-ARG DB_PATH=dev.db
 
 # install dependencies
 RUN apt-get update -y

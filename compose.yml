@@ -13,29 +13,42 @@ services:
       - caddy_config:/config
     networks:
       - rproxy
+    environment:
+      CADDY_HOST: ${CADDY_HOST}
 
   webserver:
-    image: server_manager:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_WEBSOCKET: ${VITE_BACKEND_WEBSOCKET}
+        VITE_BACKEND_HOST: ${VITE_BACKEND_HOST}
+      ssh:
+        - default
+    image: server-manager:${TAG}
     container_name: server-manager
     restart: unless-stopped
     expose:
       - 8000
     environment:
       DOCKER_HOST: tcp://docker-proxy:2375
-      DB_CONNECTION: sqlite:////data/dev.db
+      DB_CONNECTION: ${SQL_SERVER_PATH}
       SM_STATIC_PATH: /data/static/
+      CF_API_KEY: ${CF_API_KEY} # curseforge
+      SECRET_KEY: ${SECRET_KEY} # password hashing
     depends_on:
       - docker-proxy
     networks:
       - dockernet
       - rproxy
-    
+      - database
+
   docker-proxy:
     image: tecnativa/docker-socket-proxy:latest
     container_name: docker-socket-proxy
     restart: always
     ports:
-      - "2375:2375"  # Exposes proxy HTTP API on host (optional)
+      - "2375:2375"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
@@ -69,14 +82,18 @@ services:
     environment:
       POSTGRES_PASSWORD: example
     networks:
-
-
+      - database
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
   adminer:
     image: adminer
     container_name: postgres_admin
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - database
 
 
 networks:
@@ -90,3 +107,4 @@ networks:
 volumes:
   caddy_data:
   caddy_config:
+  db-data:

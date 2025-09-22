@@ -4,3 +4,4 @@
 !build.sh
 !.gitignore
 !.dockerignore
+!init.sql
