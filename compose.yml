@@ -23,8 +23,6 @@ services:
       args:
         VITE_BACKEND_WEBSOCKET: ${VITE_BACKEND_WEBSOCKET}
         VITE_BACKEND_HOST: ${VITE_BACKEND_HOST}
-      ssh:
-        - default
     image: server-manager:${TAG}
     container_name: server-manager
     restart: unless-stopped

@@ -13,7 +13,7 @@ RUN apt-get install pipx -y
 RUN pipx run hatch build -t wheel
 
 ################################## FRONTEND ##################################
-FROM node:trixie-slim AS frontend-builder
+FROM --platform=$BUILDPLATFORM node:trixie-slim AS frontend-builder
 ARG VITE_BACKEND_WEBSOCKET
 ARG VITE_BACKEND_HOST
 RUN echo ${VITE_BACKEND_HOST}
