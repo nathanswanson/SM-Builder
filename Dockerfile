@@ -1,6 +1,6 @@
 ################################## BACKEND ##################################
 FROM python:3.9.23-trixie AS backend-builder
-ADD git@github.com:nathanswanson/server_manager.git /app/
+ADD https://github.com/nathanswanson/server_manager.git /app/
 WORKDIR /app
 
 # install dependencies
@@ -18,7 +18,7 @@ ARG VITE_BACKEND_WEBSOCKET
 ARG VITE_BACKEND_HOST
 RUN echo ${VITE_BACKEND_HOST}
 WORKDIR /app
-ADD git@github.com:nathanswanson/frontend.git /app/
+ADD https://github.com/nathanswanson/frontend.git /app/
 # install dependencies
 RUN apt-get update -y
 RUN apt-get upgrade -y
