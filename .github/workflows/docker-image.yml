@@ -11,11 +11,13 @@ env:
   VITE_BACKEND_WEBSOCKET: wss://home.nathanswanson.online
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     steps:
       
       - name: Checkout
@@ -35,10 +37,11 @@ jobs:
       
       - name: Build and Push
         uses: docker/build-push-action@v6
-        env:
-          VITE_BACKEND_HOST: ${{env.VITE_BACKEND_HOST}}
-          VITE_BACKEND_WEBSOCKET: ${{env.VITE_BACKEND_WEBSOCKET}}
+        
         with:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: server-manager:latest
+          build-args: |
+            VITE_BACKEND_HOST=${{env.VITE_BACKEND_HOST}}
+            VITE_BACKEND_WEBSOCKET=${{env.VITE_BACKEND_WEBSOCKET}}
