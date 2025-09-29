@@ -14,33 +14,27 @@ services:
     networks:
       - rproxy
     environment:
-      CADDY_HOST: ${CADDY_HOST}
+      SM_API_BACKEND: ${SM_API_BACKEND}
 
   webserver:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        VITE_BACKEND_WEBSOCKET: ${VITE_BACKEND_WEBSOCKET}
-        VITE_BACKEND_HOST: ${VITE_BACKEND_HOST}
-    image: server-manager:${TAG}
+   
+    image: server-manager:${SM_TAG}
     container_name: server-manager
     restart: unless-stopped
     expose:
       - 8000
     environment:
       DOCKER_HOST: tcp://docker-proxy:2375
-      DB_CONNECTION: ${SQL_SERVER_PATH}
+      SM_DB_CONNECTION: ${SM_SQL_SERVER_PATH}
       SM_STATIC_PATH: /data/static/
-      CF_API_KEY: ${CF_API_KEY} # curseforge
-      SECRET_KEY: ${SECRET_KEY} # password hashing
+      SM_SECRET_KEY: ${SM_SECRET_KEY} # password hashing
     depends_on:
       - docker-proxy
     networks:
       - dockernet
       - rproxy
       - database
-
+      
   docker-proxy:
     image: tecnativa/docker-socket-proxy:latest
     container_name: docker-socket-proxy
@@ -78,7 +72,7 @@ services:
     #    tmpfs:
     #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
-      POSTGRES_PASSWORD: ${SQL_SERVER_PASSWORD}
+      POSTGRES_PASSWORD: ${SM_SQL_SERVER_PASSWORD}
     networks:
       - database
     volumes:

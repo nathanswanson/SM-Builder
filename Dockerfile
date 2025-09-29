@@ -14,9 +14,6 @@ RUN pipx run hatch build -t wheel
 
 ################################## FRONTEND ##################################
 FROM --platform=$BUILDPLATFORM node:trixie-slim AS frontend-builder
-ARG VITE_BACKEND_WEBSOCKET
-ARG VITE_BACKEND_HOST
-RUN echo ${VITE_BACKEND_HOST}
 WORKDIR /app
 ADD https://github.com/nathanswanson/frontend.git /app/
 # install dependencies
@@ -26,7 +23,7 @@ RUN apt-get upgrade -y
 
 
 RUN npm install
-RUN VITE_BACKEND_WEBSOCKET=${VITE_BACKEND_WEBSOCKET} VITE_BACKEND_HOST=${VITE_BACKEND_HOST} npm run build
+RUN npm run build
 
 ################################## BASE ##################################
 FROM ubuntu:25.04
