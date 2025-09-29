@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: server-manager
   VITE_BACKEND_HOST: https://home.nathanswanson.online
   VITE_BACKEND_WEBSOCKET: wss://home.nathanswanson.online
 
@@ -28,7 +28,13 @@ jobs:
           registry: ${{env.REGISTRY}}
           username: ${{ github.actor}}
           password: ${{ secrets.GITHUB_TOKEN }}
-          
+
+      - name: Extract Metadata
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       
@@ -37,11 +43,11 @@ jobs:
       
       - name: Build and Push
         uses: docker/build-push-action@v6
-        
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: server-manager:latest
+          tags: ${{ steps.meta.ouputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VITE_BACKEND_HOST=${{env.VITE_BACKEND_HOST}}
             VITE_BACKEND_WEBSOCKET=${{env.VITE_BACKEND_WEBSOCKET}}
