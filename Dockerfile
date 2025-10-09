@@ -1,6 +1,6 @@
 ################################## BACKEND ##################################
 FROM python:3.9.23-trixie AS backend-builder
-ADD https://github.com/nathanswanson/server_manager.git /app/
+COPY ./SM-Backend/ /app/
 WORKDIR /app
 
 # install dependencies
@@ -15,14 +15,14 @@ RUN pipx run hatch build -t wheel
 ################################## FRONTEND ##################################
 FROM --platform=$BUILDPLATFORM node:trixie-slim AS frontend-builder
 WORKDIR /app
-ADD https://github.com/nathanswanson/frontend.git /app/
+COPY ./SM-Frontend/ /app/
 # install dependencies
-RUN apt-get update -y
-RUN apt-get upgrade -y
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 
-
-
-RUN npm install
+RUN npm config set script-shell /bin/bash
+ENV NODE_OPTIONS=--max-old-space-size=4096
+ENV IN_DOCKER=1
+RUN npm ci --no-audit --prefer-offline --no-progress
 RUN npm run build
 
 ################################## BASE ##################################

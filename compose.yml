@@ -17,8 +17,7 @@ services:
       SM_API_BACKEND: ${SM_API_BACKEND}
 
   webserver:
-   
-    image: server-manager:${SM_TAG}
+    image: ghcr.io/nathanswanson/server-manager:main
     container_name: server-manager
     restart: unless-stopped
     expose:
