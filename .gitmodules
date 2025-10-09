@@ -1,6 +1,8 @@
 [submodule "SM-Backend"]
 	path = SM-Backend
 	url = https://github.com/nathanswanson/SM-Backend.git
+	branch=v0.1.0
 [submodule "SM-Frontend"]
 	path = SM-Frontend
 	url = https://github.com/nathanswanson/SM-Frontend.git
+	branch=v0.1.0
