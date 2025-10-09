@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           submodules: 'recursive'
+          fetch-depth: 0 
       - name: Verify Submodule Contents
         run: |
           echo "Listing contents of the submodule folder..."
