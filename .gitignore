@@ -3,6 +3,7 @@
 !compose.yml
 !build.sh
 !.gitignore
+!.gitmodules
 !.dockerignore
 !init.sql
 !README.md

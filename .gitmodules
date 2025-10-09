@@ -1,0 +1,6 @@
+[submodule "SM-Frontend"]
+	path = SM-Frontend
+	url = https://github.com/nathanswanson/SM-Frontend.git
+[submodule "SM-Backend"]
+	path = SM-Backend
+	url = https://github.com/nathanswanson/SM-Backend.git
