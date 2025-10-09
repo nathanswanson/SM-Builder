@@ -2,6 +2,7 @@
 !Dockerfile
 !compose.yml
 !build.sh
+!.github
 !.gitignore
 !.gitmodules
 !.dockerignore
