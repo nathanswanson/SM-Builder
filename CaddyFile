@@ -1,16 +1,6 @@
-{
-	admin 0.0.0.0:2019
-}
-
-api.{$SM_API_BACKEND} {
-	reverse_proxy server-manager:8000
-	tls internal
-}
-
 {$SM_API_BACKEND} {
 	reverse_proxy frontend:4000 {
 		header_up Upgrade {http.request.header.Upgrade}
 		header_up Connection {http.request.header.Connection}
 	}
-	tls internal
 }
