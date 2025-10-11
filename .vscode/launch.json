@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Launch Chrome",
+            "request": "launch",
+            "type": "chrome",
+            "browserLaunchLocation": "ui",
+            
+            "disableNetworkCache": true,
+            "url": "https://vite.localhost",
+            "webRoot": "${workspaceFolder}/SM-Frontend"
+        },
+        {
+            "name": "Python Debugger: Remote Attach",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/SM-Backend",
+                    "remoteRoot": "/app"
+                }
+            ]
+        }
+    ]
+}

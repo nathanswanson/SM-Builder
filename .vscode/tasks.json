@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "docker-compose",
+            "label": "Dev Env Enable",
+            "dockerCompose": {
+                "envFile": "${workspaceFolder}/.env",
+                "up": {
+                    "detached": true,
+                    "build": true
+                },
+                "files": [
+                    "${workspaceFolder}/compose.yml",
+                                        "${workspaceFolder}/compose.override.yml",
+
+                ]
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            
+            "type": "docker-compose",
+            "label": "Dev Env Disable",
+            "dockerCompose": {
+                "down": {
+                    "removeVolumes": false
+                },
+                "files": [
+                    "${workspaceFolder}/compose.yml",
+                    "${workspaceFolder}/compose.override.yml",
+
+                ]
+            }
+        },
+        {
+            "label": "Update API",
+            "type": "npm"
+        }
+    ]
+}

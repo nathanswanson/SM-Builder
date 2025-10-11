@@ -11,3 +11,7 @@
 !CaddyFile
 !SM-Frontend
 !SM-Backend
+!.vscode
+!.vscode/launch.json
+!compose.override.yml
+!.vscode/tasks.json
