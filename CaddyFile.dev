@@ -1,0 +1,24 @@
+{
+	log
+	admin 0.0.0.0:2019
+	layer4 {
+		0.0.0.0:1234 {
+
+		}
+	}
+}
+
+http://api.{$SM_API_BACKEND} {
+	reverse_proxy server-manager:8000
+}
+
+http://demo.{$SM_API_BACKEND} {
+	reverse_proxy server-manager:8000
+}
+
+http://{$SM_API_BACKEND} {
+	reverse_proxy frontend:4000 {
+		header_up Upgrade {http.request.header.Upgrade}
+		header_up Connection {http.request.header.Connection}
+	}
+}

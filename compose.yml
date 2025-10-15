@@ -1,20 +1,28 @@
 services:
   caddy:
-    image: caddy:latest
+    build:
+      dockerfile: ./Dockerfile.caddy
+      context: .
+    image: caddy-server-manager:latest
+    
     container_name: rproxy
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
       - "443:443/udp"
+      - "${SM_PORT_START}-${SM_PORT_END}:${SM_PORT_START}-${SM_PORT_END}"
     volumes:
-      - ./CaddyFile:/etc/caddy/Caddyfile:ro
+      - ./${SM_CADDY_FILE}:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     networks:
       - rproxy
+      - servers
     environment:
       SM_API_BACKEND: ${SM_API_BACKEND}
+    labels:
+      - online.nathanswanson.engine=True
 
   webserver:
     image: ghcr.io/nathanswanson/server-manager:main
@@ -28,12 +36,18 @@ services:
       SM_API_BACKEND: ${SM_API_BACKEND}
       SM_STATIC_PATH: /data/static/
       SM_SECRET_KEY: ${SM_SECRET_KEY} # password hashing
+      SM_PORT_START: ${SM_PORT_START}
+      SM_PORT_END: ${SM_PORT_END}
+      SM_LOG_PATH: ${SM_LOG_PATH}
+      SM_MOUNT_PATH: ${SM_MOUNT_PATH}
     depends_on:
       - docker-proxy
     networks:
       - dockernet
       - rproxy
       - database
+    labels:
+      - online.nathanswanson.engine=True
       
   docker-proxy:
     image: tecnativa/docker-socket-proxy:latest
@@ -56,6 +70,8 @@ services:
       EXEC: "1"
     networks:
       - dockernet
+    labels:
+      - online.nathanswanson.engine=True
 
 # Use postgres/example user/password credentials
 
@@ -77,6 +93,9 @@ services:
       - database
     volumes:
       - db-data:/var/lib/postgresql/data
+    labels:
+      - online.nathanswanson.engine=True
+
   adminer:
     image: adminer
     container_name: postgres_admin
@@ -85,6 +104,8 @@ services:
       - 8080:8080
     networks:
       - database
+    labels:
+      - online.nathanswanson.engine=True
 
 
 networks:
@@ -93,6 +114,8 @@ networks:
   dockernet:
     driver: bridge
   database:
+    driver: bridge
+  servers:
     driver: bridge
  
 volumes:

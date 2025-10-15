@@ -1,5 +1,6 @@
 *
 !Dockerfile
+!Dockerfile.caddy
 !compose.yml
 !build.sh
 !.github
@@ -9,6 +10,7 @@
 !init.sql
 !README.md
 !CaddyFile
+!CaddyFile.dev
 !SM-Frontend
 !SM-Backend
 !.vscode

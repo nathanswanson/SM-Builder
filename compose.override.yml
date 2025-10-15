@@ -6,11 +6,12 @@ services:
     volumes:
       - ./SM-Backend:/app
     image: "server-manager:local"
-    command: hatch run debugpy --listen 0.0.0.0:5678  -m uvicorn src.server_manager.webservice.webservice:app --reload --host 0.0.0.0 --port 8000
+    command: hatch run default:debug
     pull_policy: never
     environment:
       - SM_STATIC_PATH=NULL
       - SM_ENV=DEV
+      - SM_LOG_LEVEL=DEBUG
     ports:
       - "5678:5678"
   frontend:
