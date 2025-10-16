@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+  workflow_run:
+    workflows: [Artifact Builder]
+    types: [completed]
 
 env:
   REGISTRY: ghcr.io
@@ -24,20 +27,18 @@ jobs:
         with:
           submodules: 'recursive'
       - name: Run Frontend Action
-        uses: actions/download-artifact@v5
+        uses: dawidd6/action-download-artifact@v11
         with:
-          name: server-manager-frontend
-          github-token: ${{secrets.GH_PAT}}
-          repository: nathanswanson/SM-Frontend
-          run-id: 1
+          # name: server-manager-frontend
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          repo: nathanswanson/SM-Frontend
   
       - name: Run Backend Action
-        uses: actions/download-artifact@v5
+        uses: dawidd6/action-download-artifact@v11
         with:
-          name: server-manager-backend
-          github-token: ${{secrets.GH_PAT}}
-          repository: nathanswanson/SM-Backend
-          run-id: 1
+          # name: server-manager-backend
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          repo: nathanswanson/SM-Backend
           
       - name: Registry Login
         uses: docker/login-action@v3
