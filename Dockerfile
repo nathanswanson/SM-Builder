@@ -1,19 +1,18 @@
 FROM ubuntu:25.04
 
 WORKDIR /app
-COPY server-manager-frontend.zip server-manager-backend.zip /tmp/
-RUN ls /tmp
+
+# backend
+COPY server_manager*.whl /app/
+# frontend
+COPY frontend/ /data/static/
 
 RUN apt-get update && \
     apt-get install -y unzip pipx && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN unzip /tmp/server-manager-backend.zip
-RUN pipx install server_manager*.whl
-
-# frontend
-RUN unzip /tmp/server-manager-frontend.zip -d /data/static
+RUN pipx install server_manager*.whl && rm server_manager*.whl
 
 EXPOSE 8000
 
