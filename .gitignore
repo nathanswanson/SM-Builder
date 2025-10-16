@@ -3,3 +3,4 @@ init_db
 caddy_schema.json
 __pycache__
 *.pyc
+out/
