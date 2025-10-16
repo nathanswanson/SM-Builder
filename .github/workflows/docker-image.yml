@@ -11,9 +11,9 @@ env:
 
 jobs:
   call-backend-artifact:
-    uses: ./SM-Backend/.github/workflows/actions.yml
+    uses: nathanswanson/SM-Backend/.github/workflows/actions.yml@main
   call-frontend-artifact:
-    uses: ./SM-Frontend/.github/workflows/actions.yml
+    uses: nathanswanson/SM-Frontend/.github/workflows/actions.yml@main
   build:
     runs-on: ubuntu-latest
     needs: [call-backend-artifact, call-frontend-artifact]
