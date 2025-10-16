@@ -26,18 +26,14 @@ jobs:
         uses: actions/checkout@v5
         with:
           submodules: 'recursive'
-      - name: Run Frontend Action
-        uses: dawidd6/action-download-artifact@v11
-        with:
-          # name: server-manager-frontend
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: nathanswanson/SM-Frontend
+
+      - name: Call Backend Action
+        uses: ./SM-Backend/.github/workflows/actions.yml
   
       - name: Run Backend Action
-        uses: dawidd6/action-download-artifact@v11
+        uses: actions/download-artifact@v5
         with:
           # name: server-manager-backend
-          github_token: ${{secrets.GITHUB_TOKEN}}
           repo: nathanswanson/SM-Backend
           
       - name: Registry Login
