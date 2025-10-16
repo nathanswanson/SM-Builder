@@ -28,7 +28,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Call Backend Action
-        uses: ./SM-Backend/.github/workflows/actions.yml
+        uses: ./SM-Backend/.github/workflows
   
       - name: Run Backend Action
         uses: actions/download-artifact@v5
