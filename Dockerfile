@@ -1,7 +1,7 @@
 FROM ubuntu:25.04
 
 WORKDIR /app
-COPY out/1/* /tmp/
+COPY server_manager_frontend server_manager_backend /tmp/
 RUN ls /tmp
 
 RUN apt-get update && \
