@@ -30,14 +30,14 @@ jobs:
         uses: dawidd6/action-download-artifact@v11
         with:
           # name: server-manager-frontend
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github_token: ${{secrets.GITHUB_TOKEN}}
           repo: nathanswanson/SM-Frontend
   
       - name: Run Backend Action
         uses: dawidd6/action-download-artifact@v11
         with:
           # name: server-manager-backend
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github_token: ${{secrets.GITHUB_TOKEN}}
           repo: nathanswanson/SM-Backend
           
       - name: Registry Login
