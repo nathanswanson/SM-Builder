@@ -33,12 +33,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: server-manager-backend
-          pattern: "*.zip"
       - name: Download Artifact Frontend
         uses: actions/download-artifact@v4
         with:
           name: server-manager-frontend
-          pattern: "*.zip"
 
       - name: Registry Login
         uses: docker/login-action@v3

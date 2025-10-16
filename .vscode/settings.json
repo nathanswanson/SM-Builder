@@ -30,5 +30,5 @@
   "ruff.configurationPreference": "filesystemFirst",
   "python.analysis.typeCheckingMode": "standard",
   "python.analysis.autoImportCompletions": true,
-  "githubLocalActions.actCommand": "act --env ACTIONS_RUNTIME_TOKEN=foo --env ACTIONS_RUNTIME_URL=http://artifacts.docker.internal:8080/  --env ACTIONS_CACHE_URL=http://artifacts.docker.internal:8080/ --artifact-server-path out",
+  "githubLocalActions.actCommand": "act --env ACTIONS_RUNTIME_TOKEN=foo  --artifact-server-path out",
 }
