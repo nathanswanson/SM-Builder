@@ -1,0 +1,34 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "*caddy*.json"
+      ],
+      "url": ".vscode/caddy_schema.json"
+    }
+  ],
+  "yaml.schemas": {
+    ".vscode/caddy_schema.json": [
+      "*caddy*.yaml",
+      "*caddy*.yml"
+    ]
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.venv": true,
+    "**/__init__.py": false
+  },
+  "editor.formatOnSave": true,
+  "ruff.nativeServer": "on",
+  "ruff.trace.server": "messages",
+  "ruff.configurationPreference": "filesystemFirst",
+  "python.analysis.typeCheckingMode": "standard",
+  "python.analysis.autoImportCompletions": true,
+  "githubLocalActions.actCommand": "act --env ACTIONS_RUNTIME_TOKEN=foo --env ACTIONS_RUNTIME_URL=http://artifacts.docker.internal:8080/  --env ACTIONS_CACHE_URL=http://artifacts.docker.internal:8080/ --artifact-server-path out",
+}
