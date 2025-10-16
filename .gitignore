@@ -3,7 +3,8 @@
 !Dockerfile.caddy
 !compose.yml
 !build.sh
-!.github
+!.github/
+!.github/**/*
 !.gitignore
 !.gitmodules
 !.dockerignore

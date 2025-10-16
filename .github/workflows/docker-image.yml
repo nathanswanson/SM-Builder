@@ -2,40 +2,44 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
-  workflow_run:
-    workflows: [Artifact Builder]
-    types: [completed]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: server-manager
 
 jobs:
+  call-backend-artifact:
+    uses: ./SM-Backend/.github/workflows/actions.yml
+  call-frontend-artifact:
+    uses: ./SM-Frontend/.github/workflows/actions.yml
   build:
     runs-on: ubuntu-latest
+    needs: [call-backend-artifact, call-frontend-artifact]
+    if: ${{ needs.call-backend-artifact.result == 'success' && needs.call-frontend-artifact.result == 'success' }}
     permissions:
       packages: write
       contents: read
       attestations: write
       id-token: write
     steps:
-      
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
 
-      - name: Call Backend Action
-        uses: ./SM-Backend/.github/workflows/actions.yml
-  
-      - name: Run Backend Action
-        uses: actions/download-artifact@v5
+      - name: Download Artifacts Backend
+        uses: actions/download-artifact@v4
         with:
-          # name: server-manager-backend
-          repo: nathanswanson/SM-Backend
-          
+          name: server-manager-backend
+          pattern: "*.zip"
+      - name: Download Artifact Frontend
+        uses: actions/download-artifact@v4
+        with:
+          name: server-manager-frontend
+          pattern: "*.zip"
+
       - name: Registry Login
         uses: docker/login-action@v3
         with:
@@ -48,17 +52,14 @@ jobs:
         id: meta
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
-      
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      
+
       - name: Build and Push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64,linux/arm64
-          push: true
+          file: ./Dockerfile
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # build-args: |
+          #   RUN_ID=${{ github.run_id }}

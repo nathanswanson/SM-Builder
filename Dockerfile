@@ -1,48 +1,21 @@
-################################## BACKEND ##################################
-FROM python:3.9.23-trixie AS backend-builder
-COPY ./SM-Backend/ /app/
-WORKDIR /app
-
-# install dependencies
-RUN apt-get update -y
-RUN apt-get upgrade -y
-
-RUN apt-get install pipx -y
-
-# build backend
-RUN pipx run hatch build -t wheel
-
-################################## FRONTEND ##################################
-FROM --platform=$BUILDPLATFORM node:trixie-slim AS frontend-builder
-WORKDIR /app
-COPY ./SM-Frontend/ /app/
-# install dependencies
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
-
-RUN npm config set script-shell /bin/bash
-ENV NODE_OPTIONS=--max-old-space-size=4096
-ENV IN_DOCKER=1
-RUN npm ci --no-audit --prefer-offline --no-progress
-RUN npm run build
-
-################################## BASE ##################################
 FROM ubuntu:25.04
 
-# install dependencies
-RUN apt-get update -y
-RUN apt-get upgrade -y
-
-RUN apt-get install pipx -y
-RUN pipx ensurepath
-
 WORKDIR /app
+COPY out/1/* /tmp/
+RUN ls /tmp
 
-COPY --from=backend-builder /app/dist/ /app/dist/
-RUN pipx install /app/dist/*.whl
+RUN apt-get update && \
+    apt-get install -y unzip pipx && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY --from=frontend-builder /app/dist/ /data/static/
+RUN unzip /tmp/server-manager-backend.zip
+RUN pipx install server_manager*.whl
+
+# frontend
+RUN unzip /tmp/server-manager-frontend.zip -d /data/static
 
 EXPOSE 8000
 
-VOLUME [ "/data", "/config"]
+VOLUME [ "/data"]
 ENTRYPOINT [ "/root/.local/bin/server_manager" ]
