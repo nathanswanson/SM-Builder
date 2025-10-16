@@ -1,7 +1,7 @@
 FROM ubuntu:25.04
 
 WORKDIR /app
-COPY server_manager_frontend.zip server_manager_backend.zip /tmp/
+COPY server-manager-frontend.zip server-manager-backend.zip /tmp/
 RUN ls /tmp
 
 RUN apt-get update && \
