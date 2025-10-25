@@ -5,9 +5,8 @@
             "request": "launch",
             "type": "chrome",
             "browserLaunchLocation": "ui",
-            
             "disableNetworkCache": true,
-            "url": "https://vite.localhost",
+            "url": "http://localhost",
             "webRoot": "${workspaceFolder}/SM-Frontend"
         },
         {
@@ -24,6 +23,12 @@
                     "remoteRoot": "/app"
                 }
             ]
+        },
+        {
+            "name": "launch storybook",
+            "type": "node",
+            "request": "launch",
+            "program": "storybook"
         }
     ]
 }

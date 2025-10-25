@@ -5,6 +5,12 @@
         "*caddy*.json"
       ],
       "url": ".vscode/caddy_schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.smtemplate.json"
+      ],
+      "url": "./template-mods.schema.json"
     }
   ],
   "yaml.schemas": {
@@ -22,7 +28,8 @@
     "**/__pycache__": true,
     "**/.pytest_cache": true,
     "**/.venv": true,
-    "**/__init__.py": false
+    "**/__init__.py": false,
+    "**/node_modules/": true
   },
   "editor.formatOnSave": true,
   "ruff.nativeServer": "on",
@@ -30,5 +37,25 @@
   "ruff.configurationPreference": "filesystemFirst",
   "python.analysis.typeCheckingMode": "standard",
   "python.analysis.autoImportCompletions": true,
+  "python.analysis.exclude": [
+    "**/SM-Frontend/",
+    "**/dist/",
+    "**/node_modules/",
+    "**/build/",
+    "**/.venv/",
+    "**/__pycache__/",
+    "**/.pytest_cache/",
+  ],
   "githubLocalActions.actCommand": "act --env ACTIONS_RUNTIME_TOKEN=foo  --artifact-server-path out",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+  },
 }

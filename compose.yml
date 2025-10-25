@@ -4,7 +4,7 @@ services:
       dockerfile: ./Dockerfile.caddy
       context: .
     image: caddy-server-manager:latest
-    
+
     container_name: rproxy
     restart: unless-stopped
     ports:
@@ -48,7 +48,7 @@ services:
       - database
     labels:
       - online.nathanswanson.engine=True
-      
+
   docker-proxy:
     image: tecnativa/docker-socket-proxy:latest
     container_name: docker-socket-proxy
@@ -58,11 +58,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      CONTAINERS: "1"   # allow create/list/inspect/remove containers
-      IMAGES: "1"       # allow image operations
-      VOLUMES: "0"      # disallow volume operations (set 1 if needed)
-      NETWORKS: "1"     # allow network operations
-      SERVICES: "0"     # disallow swarm services (optional)
+      CONTAINERS: "1" # allow create/list/inspect/remove containers
+      IMAGES: "1" # allow image operations
+      VOLUMES: "0" # disallow volume operations (set 1 if needed)
+      NETWORKS: "1" # allow network operations
+      SERVICES: "0" # disallow swarm services (optional)
       CONFIGS: "0"
       SECRETS: "0"
       SWARM: "0"
@@ -73,10 +73,10 @@ services:
     labels:
       - online.nathanswanson.engine=True
 
-# Use postgres/example user/password credentials
+  # Use postgres/example user/password credentials
 
   db:
-    image: postgres
+    image: postgres:18.0
     container_name: postgres
     restart: always
     # set shared memory limit when using docker compose
@@ -91,8 +91,6 @@ services:
       POSTGRES_PASSWORD: ${SM_SQL_SERVER_PASSWORD}
     networks:
       - database
-    volumes:
-      - db-data:/var/lib/postgresql/data
     labels:
       - online.nathanswanson.engine=True
 
@@ -107,7 +105,6 @@ services:
     labels:
       - online.nathanswanson.engine=True
 
-
 networks:
   rproxy:
     driver: bridge
@@ -117,7 +114,7 @@ networks:
     driver: bridge
   servers:
     driver: bridge
- 
+
 volumes:
   caddy_data:
   caddy_config:

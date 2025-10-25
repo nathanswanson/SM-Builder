@@ -4,3 +4,4 @@ caddy_schema.json
 __pycache__
 *.pyc
 out/
+sm-data/

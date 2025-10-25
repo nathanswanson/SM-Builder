@@ -13,7 +13,10 @@ http://api.{$SM_API_BACKEND} {
 }
 
 http://demo.{$SM_API_BACKEND} {
-	reverse_proxy server-manager:8000
+	reverse_proxy server-manager:8000 {
+		header_up Upgrade {http.request.header.Upgrade}
+		header_up Connection {http.request.header.Connection}
+	}
 }
 
 http://{$SM_API_BACKEND} {
