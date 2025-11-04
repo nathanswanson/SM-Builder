@@ -66,5 +66,7 @@
     "SM-Backend/**",
     "sm-data/**"
   ],
-  "vitest.ignoreWorkspace": true
+  "vitest.ignoreWorkspace": true,
+  "typescript.autoClosingTags": false,
+  "typescript.experimental.useTsgo": false
 }

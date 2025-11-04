@@ -25,15 +25,6 @@
             ]
         },
         {
-            "name": "Launch Chrome-storybook",
-            "request": "launch",
-            "type": "chrome",
-            "browserLaunchLocation": "ui",
-            "disableNetworkCache": true,
-            "url": "http://localhost:6006",
-            "webRoot": "${workspaceFolder}/SM-Frontend"
-        },
-        {
             "type": "node",
             "request": "launch",
             "name": "Debug Current Test File",
@@ -42,7 +33,7 @@
                 "<node_internals>/**",
                 "**/node_modules/**"
             ],
-            "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+            "program": "${workspaceRoot}/SM-Frontend/node_modules/vitest/vitest.mjs",
             "args": [
                 "run",
                 "${relativeFile}"
