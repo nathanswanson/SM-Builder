@@ -6,7 +6,7 @@
             "type": "chrome",
             "browserLaunchLocation": "ui",
             "disableNetworkCache": true,
-            "url": "http://localhost",
+            "url": "http://vite.localhost",
             "webRoot": "${workspaceFolder}/SM-Frontend"
         },
         {
@@ -25,10 +25,30 @@
             ]
         },
         {
-            "name": "launch storybook",
+            "name": "Launch Chrome-storybook",
+            "request": "launch",
+            "type": "chrome",
+            "browserLaunchLocation": "ui",
+            "disableNetworkCache": true,
+            "url": "http://localhost:6006",
+            "webRoot": "${workspaceFolder}/SM-Frontend"
+        },
+        {
             "type": "node",
             "request": "launch",
-            "program": "storybook"
+            "name": "Debug Current Test File",
+            "autoAttachChildProcesses": true,
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+            "args": [
+                "run",
+                "${relativeFile}"
+            ],
+            "smartStep": true,
+            "console": "integratedTerminal"
         }
     ]
 }

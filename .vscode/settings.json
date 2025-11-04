@@ -2,23 +2,11 @@
   "json.schemas": [
     {
       "fileMatch": [
-        "*caddy*.json"
-      ],
-      "url": ".vscode/caddy_schema.json"
-    },
-    {
-      "fileMatch": [
         "*.smtemplate.json"
       ],
       "url": "./template-mods.schema.json"
     }
   ],
-  "yaml.schemas": {
-    ".vscode/caddy_schema.json": [
-      "*caddy*.yaml",
-      "*caddy*.yml"
-    ]
-  },
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -29,7 +17,6 @@
     "**/.pytest_cache": true,
     "**/.venv": true,
     "**/__init__.py": false,
-    "**/node_modules/": true
   },
   "editor.formatOnSave": true,
   "ruff.nativeServer": "on",
@@ -46,8 +33,14 @@
     "**/__pycache__/",
     "**/.pytest_cache/",
   ],
+  "debug.javascript.terminalOptions": {
+    "resolveSourceMapLocations": [
+      "**/SM-Frontend/**",
+      "!**/node_modules/**",
+      "**/node_modules/.vite-temp/**"
+    ]
+  },
   "githubLocalActions.actCommand": "act --env ACTIONS_RUNTIME_TOKEN=foo  --artifact-server-path out",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.organizeImports": "always"
@@ -58,4 +51,20 @@
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-containers"
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vitest.debugExclude": [
+    "<node_internals>/**",
+    "**/node_modules/**",
+    "SM-Backend/**",
+    "sm-data/**"
+  ],
+  "vitest.ignoreWorkspace": true
 }

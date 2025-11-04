@@ -5,15 +5,16 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./SM-Backend:/app
+      - ./SM-Frontend/dist:/data/static
     image: "server-manager:local"
     command: hatch run default:debug
     pull_policy: never
     environment:
-      - SM_STATIC_PATH=NULL
+      - SM_STATIC_PATH=/data/static
       - SM_ENV=DEV
       - SM_LOG_LEVEL=DEBUG
     ports:
-      - "5678:5678"
+      - "5678:5678" # python debug
   frontend:
     container_name: frontend
     build:
