@@ -52,11 +52,18 @@ cd server-manager/builder
 
 ## Usage
 
-| Variables | description |
-| --------- | ----------- |
-| test      |             |
-| test      |             |
-|           |             |
+| Variables              | description       |
+| ---------------------- | ----------------- |
+| SM_SECRET_KEY          | Key used for auth |
+| SM_CADDY_FILE          |                   |
+| SM_SQL_SERVER_PATH     |                   |
+| SM_SQL_SERVER_PASSWORD |                   |
+| SM_TAG                 |                   |
+| SM_PORT_START          |                   |
+| SM_PORT_END            |                   |
+| SM_ENV                 |                   |
+| SM_LOG_PATH            |                   |
+| SM_MOUNT_PATH=         |                   |
 
 Make an .env file:
 
