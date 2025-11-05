@@ -45,7 +45,7 @@ Where to go next
 Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/<org>/server-manager.git
+git clone https://github.com/nathanswanson/server-manager.git
 cd server-manager/builder
 
 ```
