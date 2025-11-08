@@ -1,21 +1,30 @@
 {
+	log
+	admin 0.0.0.0:2019
 	layer4 {
-				0.0.0.0:1234 {
+		0.0.0.0:1234 {
 
 		}
 	}
 }
 
-https://demo.{$SM_API_BACKEND} {
-	reverse_proxy server-manager:8000 {
-		header_up Upgrade {http.request.header.Upgrade}
-		header_up Connection {http.request.header.Connection}
+https://{$SM_API_BACKEND} {
+	handle {
+		reverse_proxy server-manager:8000 {
+			header_up Upgrade {http.request.header.Upgrade}
+			header_up Connection {http.request.header.Connection}
+		}
 	}
 }
 
-{$SM_API_BACKEND} {
-	reverse_proxy server-manager:8000 {
-		header_up Upgrade {http.request.header.Upgrade}
-		header_up Connection {http.request.header.Connection}
+https://demo.{$SM_API_BACKEND} {
+	root * /srv
+	encode gzip
+	@notStatic {
+		not file
+		not path /assets/*
 	}
+	rewrite @notStatic /index.html
+	header /index.html Cache-Control "public, max-age=0, must-revalidate"	
+	file_server
 }

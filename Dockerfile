@@ -8,7 +8,7 @@ COPY server_manager*.whl /app/
 COPY frontend/ /data/static/
 
 RUN apt-get update && \
-    apt-get install -y unzip pipx && \
+    apt-get install -y unzip pipx docker.io && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
