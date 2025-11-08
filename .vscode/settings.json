@@ -68,5 +68,9 @@
   ],
   "vitest.ignoreWorkspace": true,
   "typescript.autoClosingTags": false,
-  "typescript.experimental.useTsgo": false
+  "typescript.experimental.useTsgo": false,
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/wsl/Textual/server-manager/builder/deploy-app.yml"
+  },
+  "ansible.python.interpreterPath": "/bin/python"
 }

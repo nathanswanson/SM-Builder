@@ -1,0 +1,8 @@
+import CaddyFile.base
+
+https://vite.{$SM_API_BACKEND} {
+	reverse_proxy frontend:4000 {
+		header_up Upgrade {http.request.header.Upgrade}
+		header_up Connection {http.request.header.Connection}
+	}
+}

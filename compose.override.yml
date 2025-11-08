@@ -26,5 +26,8 @@ services:
     networks:
       - rproxy
   caddy:
+    command: caddy run --config /etc/caddy/CaddyFile.dev --adapter caddyfile
     ports:
       - "2019:2019" # Expose Caddy's admin port for easier debugging
+    volumes:
+      - ./SM-Frontend/dist:/srv:ro

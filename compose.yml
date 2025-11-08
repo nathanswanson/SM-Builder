@@ -13,10 +13,10 @@ services:
       - "443:443/udp"
       - "${SM_PORT_START}-${SM_PORT_END}:${SM_PORT_START}-${SM_PORT_END}"
     volumes:
-      - ./${SM_CADDY_FILE}:/etc/caddy/Caddyfile:ro
+      - $PWD/conf:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
-      - frontend/:/srv:ro
+      - $PWD/frontend/:/srv:ro
     networks:
       - rproxy
       - servers

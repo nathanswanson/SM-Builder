@@ -1,0 +1,37 @@
+{
+	log
+	admin 0.0.0.0:2019
+	layer4 {
+		0.0.0.0:1234 {
+		}
+	}
+}
+
+(static_server) {
+	root * /srv
+	encode gzip
+	@notStatic {
+		not file
+		not path /assets/*
+	}
+	rewrite @notStatic /index.html
+	header /index.html Cache-Control "public, max-age=0, must-revalidate"
+	file_server
+}
+
+https://home.{$SM_API_BACKEND} {
+	handle_path /api/* {
+		reverse_proxy server-manager:8000 {
+			header_up Upgrade {http.request.header.Upgrade}
+			header_up Connection {http.request.header.Connection}
+		}
+	}
+
+	handle {
+		import static_server
+	}
+}
+
+https://demo.{$SM_API_BACKEND} {
+	import static_server
+}

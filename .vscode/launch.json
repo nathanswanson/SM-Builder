@@ -6,7 +6,7 @@
             "type": "chrome",
             "browserLaunchLocation": "ui",
             "disableNetworkCache": true,
-            "url": "http://vite.localhost",
+            "url": "http://demo.localhost",
             "webRoot": "${workspaceFolder}/SM-Frontend"
         },
         {
