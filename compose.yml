@@ -35,7 +35,7 @@ services:
       DOCKER_HOST: tcp://docker-proxy:2375
       SM_DB_CONNECTION: ${SM_SQL_SERVER_PATH}
       SM_API_BACKEND: ${SM_API_BACKEND}
-      SM_STATIC_PATH: /data/static/
+      SM_STATIC_PATH: /srv/
       SM_SECRET_KEY: ${SM_SECRET_KEY} # password hashing
       SM_PORT_START: ${SM_PORT_START}
       SM_PORT_END: ${SM_PORT_END}

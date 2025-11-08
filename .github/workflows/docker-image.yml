@@ -15,9 +15,12 @@ jobs:
   call-frontend-artifact:
     uses: nathanswanson/SM-Frontend/.github/workflows/actions.yml@main
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [ubuntu-24.04, ubuntu-24.04-arm]
     needs: [call-backend-artifact, call-frontend-artifact]
     if: ${{ needs.call-backend-artifact.result == 'success' && needs.call-frontend-artifact.result == 'success' }}
+    runs-on: ${{ matrix.platform}}
     permissions:
       packages: write
       contents: read
