@@ -1,4 +1,5 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
             "name": "Launch Chrome",
@@ -24,22 +25,5 @@
                 }
             ]
         },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Debug Current Test File",
-            "autoAttachChildProcesses": true,
-            "skipFiles": [
-                "<node_internals>/**",
-                "**/node_modules/**"
-            ],
-            "program": "${workspaceRoot}/SM-Frontend/node_modules/vitest/vitest.mjs",
-            "args": [
-                "run",
-                "${relativeFile}"
-            ],
-            "smartStep": true,
-            "console": "integratedTerminal"
-        }
     ]
 }

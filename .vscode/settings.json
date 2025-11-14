@@ -17,6 +17,7 @@
     "**/.pytest_cache": true,
     "**/.venv": true,
     "**/__init__.py": false,
+    "**/.ruff_cache/": true
   },
   "editor.formatOnSave": true,
   "ruff.nativeServer": "on",
@@ -72,5 +73,14 @@
   "yaml.schemas": {
     "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/wsl/Textual/server-manager/builder/deploy-app.yml"
   },
-  "ansible.python.interpreterPath": "/bin/python"
+  "ansible.python.interpreterPath": "/bin/python",
+  "python.testing.autoTestDiscoverOnSavePattern": "**/tests/**/*.py",
+  "python.testing.pytestArgs": [
+    "SM-Backend/tests",
+    "--cov=SM-Backend/tests",
+    "--cov=SM-Backend/src/server_manager"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "debugpy.showPythonInlineValues": true
 }

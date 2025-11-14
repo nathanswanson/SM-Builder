@@ -7,3 +7,4 @@ out/
 sm-data/
 *.log
 frontend/
+*.coverage
