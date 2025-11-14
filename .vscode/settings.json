@@ -82,5 +82,11 @@
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-  "debugpy.showPythonInlineValues": true
+  "debugpy.showPythonInlineValues": true,
+  "python.analysis.typeEvaluation.strictDictionaryInference": false,
+  "python.analysis.typeEvaluation.strictListInference": true,
+  "python.analysis.typeEvaluation.strictSetInference": false,
+  "python.analysis.languageServerMode": "full",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.autoFormatStrings": true
 }
