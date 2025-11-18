@@ -3,41 +3,81 @@
     "tasks": [
         {
             "type": "docker-compose",
-            "label": "Dev Env Enable",
+            "label": "Enable Backend",
             "dockerCompose": {
                 "envFile": "${workspaceFolder}/.env",
                 "up": {
+                    "profiles": [
+                        "backend"
+                    ],
                     "detached": true,
                     "build": true
                 },
                 "files": [
                     "${workspaceFolder}/compose.yml",
-                                        "${workspaceFolder}/compose.override.yml",
-
+                    "${workspaceFolder}/compose.override.yml"
                 ]
             },
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
         },
         {
-            
             "type": "docker-compose",
-            "label": "Dev Env Disable",
+            "label": "Remove Backend",
             "dockerCompose": {
                 "down": {
-                    "removeVolumes": false
+                    "removeVolumes": false,
+                    "profiles": [
+                        "backend"
+                    ]
                 },
                 "files": [
                     "${workspaceFolder}/compose.yml",
                     "${workspaceFolder}/compose.override.yml",
-
+                ]
+            },
+        },
+        {
+            "type": "shell",
+            "label": "Disable Backend",
+            "command": "docker compose --profile=backend stop"
+        },
+        {
+            "type": "docker-compose",
+            "label": "Enable Frontend",
+            "dockerCompose": {
+                "envFile": "${workspaceFolder}/.env",
+                "up": {
+                    "profiles": [
+                        "frontend"
+                    ],
+                    "detached": true,
+                    "build": true
+                },
+                "files": [
+                    "${workspaceFolder}/compose.yml",
+                    "${workspaceFolder}/compose.override.yml"
+                ]
+            },
+        },
+        {
+            "type": "docker-compose",
+            "label": "Remove Frontend",
+            "dockerCompose": {
+                "down": {
+                    "removeVolumes": false,
+                    "profiles": [
+                        "frontend"
+                    ]
+                },
+                "files": [
+                    "${workspaceFolder}/compose.yml",
+                    "${workspaceFolder}/compose.override.yml",
                 ]
             }
         },
         {
-            "label": "Update API",
-            "type": "npm"
-        }
+            "type": "shell",
+            "label": "Disable Frontend",
+            "command": "docker compose --profile=frontend stop"
+        },
     ]
 }

@@ -15,6 +15,13 @@ services:
       - SM_LOG_LEVEL=DEBUG
     ports:
       - "5678:5678" # python debug
+  caddy:
+    command: caddy run --config /etc/caddy/CaddyFile.dev --adapter caddyfile
+    ports:
+      - "2019:2019" # Expose Caddy's admin port for easier debugging
+    volumes:
+      - ./SM-Frontend/dist:/srv:ro
+
   frontend:
     container_name: frontend
     build:
@@ -25,9 +32,7 @@ services:
       - /app/node_modules # Important: keeps container's node_modules
     networks:
       - rproxy
-  caddy:
-    command: caddy run --config /etc/caddy/CaddyFile.dev --adapter caddyfile
-    ports:
-      - "2019:2019" # Expose Caddy's admin port for easier debugging
-    volumes:
-      - ./SM-Frontend/dist:/srv:ro
+    profiles:
+      - frontend
+    depends_on:
+      - caddy

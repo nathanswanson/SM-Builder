@@ -2,18 +2,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Chrome",
+            "name": "Launch Chrome Demo",
             "request": "launch",
             "type": "chrome",
             "browserLaunchLocation": "ui",
             "disableNetworkCache": true,
+            "preLaunchTask": "Enable Frontend",
             "url": "http://demo.localhost",
             "webRoot": "${workspaceFolder}/SM-Frontend"
+        },
+        {
+            "name": "Launch Chrome Dev",
+            "request": "launch",
+            "type": "chrome",
+            "browserLaunchLocation": "ui",
+            "disableNetworkCache": true,
+            "preLaunchTask": "Enable Frontend",
+            "url": "http://vite.localhost",
+            "webRoot": "${workspaceFolder}/SM-Frontend",
+            "postDebugTask": "Disable Frontend"
         },
         {
             "name": "Python Debugger: Remote Attach",
             "type": "debugpy",
             "request": "attach",
+            "preLaunchTask": "Enable Backend",
             "connect": {
                 "host": "localhost",
                 "port": 5678
@@ -23,7 +36,18 @@
                     "localRoot": "${workspaceFolder}/SM-Backend",
                     "remoteRoot": "/app"
                 }
-            ]
+            ],
+            "postDebugTask": "Disable Backend"
         },
+    ],
+    "compounds": [
+        {
+            "stopAll": false,
+            "name": "Launch",
+            "configurations": [
+                "Launch Chrome Dev",
+                "Python Debugger: Remote Attach"
+            ]
+        }
     ]
 }

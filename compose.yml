@@ -24,6 +24,9 @@ services:
       SM_API_BACKEND: ${SM_API_BACKEND}
     labels:
       - online.nathanswanson.engine=True
+    profiles:
+      - frontend
+      - backend
 
   webserver:
     image: ghcr.io/nathanswanson/server-manager:main
@@ -43,12 +46,16 @@ services:
       SM_MOUNT_PATH: ${SM_MOUNT_PATH}
     depends_on:
       - docker-proxy
+      - caddy
+      - db
     networks:
       - dockernet
       - rproxy
       - database
     labels:
       - online.nathanswanson.engine=True
+    profiles:
+      - backend
 
   docker-proxy:
     image: tecnativa/docker-socket-proxy:latest
@@ -73,7 +80,8 @@ services:
       - dockernet
     labels:
       - online.nathanswanson.engine=True
-
+    profiles:
+      - backend
   # Use postgres/example user/password credentials
 
   db:
@@ -94,6 +102,8 @@ services:
       - database
     labels:
       - online.nathanswanson.engine=True
+    profiles:
+      - backend
 
   adminer:
     image: adminer
@@ -105,6 +115,8 @@ services:
       - database
     labels:
       - online.nathanswanson.engine=True
+    profiles:
+      - backend
 
 networks:
   rproxy:

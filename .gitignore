@@ -8,3 +8,4 @@ sm-data/
 *.log
 frontend/
 *.coverage
+htmlcov/
