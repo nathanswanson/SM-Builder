@@ -8,7 +8,7 @@ services:
       - ./SM-Frontend/dist:/data/static
     image: "server-manager:local"
     command: hatch run default:debug
-    pull_policy: never
+    pull_policy: build
     environment:
       - SM_STATIC_PATH=/data/static
       - SM_ENV=DEV
@@ -29,7 +29,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./SM-Frontend:/app
-      - /app/node_modules # Important: keeps container's node_modules
+      - /app/node_modules
     networks:
       - rproxy
     profiles:

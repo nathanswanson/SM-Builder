@@ -4,8 +4,6 @@ WORKDIR /app
 
 # backend
 COPY server_manager*.whl /app/
-# frontend
-COPY frontend/ /srv/
 
 RUN apt-get update && \
     apt-get install -y unzip pipx docker.io && \

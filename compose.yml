@@ -1,12 +1,14 @@
 services:
   caddy:
+    attach: false
     build:
       dockerfile: ./Dockerfile.caddy
       context: .
+    # pull_policy: build
     image: caddy-server-manager:latest
 
     container_name: rproxy
-    restart: unless-stopped
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -31,7 +33,7 @@ services:
   webserver:
     image: ghcr.io/nathanswanson/server-manager:main
     container_name: server-manager
-    restart: unless-stopped
+    restart: always
     expose:
       - 8000
     environment:
@@ -61,6 +63,7 @@ services:
     image: tecnativa/docker-socket-proxy:latest
     container_name: docker-socket-proxy
     restart: always
+    attach: false
     ports:
       - "2375:2375"
     volumes:
@@ -82,20 +85,17 @@ services:
       - online.nathanswanson.engine=True
     profiles:
       - backend
-  # Use postgres/example user/password credentials
 
   db:
     image: postgres:18.0
     container_name: postgres
     restart: always
+    attach: false
     # set shared memory limit when using docker compose
     shm_size: 128mb
     # or set shared memory limit when deploy via swarm stack
-    #volumes:
-    #  - type: tmpfs
-    #    target: /dev/shm
-    #    tmpfs:
-    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    volumes:
+      - db-data:/var/lib/postgresql/
     environment:
       POSTGRES_PASSWORD: ${SM_SQL_SERVER_PASSWORD}
     networks:
@@ -107,6 +107,7 @@ services:
 
   adminer:
     image: adminer
+    attach: false
     container_name: postgres_admin
     restart: always
     ports:
