@@ -1,0 +1,14 @@
+resources:
+  - ../../storage/overlays/dev
+  - ../../namespace/overlays/dev
+  - ../../apps/postgresql/overlays/dev
+  - ../../apps/adminer/overlays/dev
+  - ../../apps/servermanager/overlays/dev
+  - ../../networking/overlays/dev
+  - ../../apps/nginx/overlays/dev
+  - ../../apps/tenant-controller/overlays/dev
+secretGenerator:
+  - name: postgresql-secret
+    namespace: www
+    envs:
+      - secrets.env

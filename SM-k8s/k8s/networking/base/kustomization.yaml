@@ -1,0 +1,13 @@
+resources:
+  - gateway.yaml
+  - http-route.yaml
+
+secretGenerator:
+  - name: tls-secret
+    namespace: www
+    type: kubernetes.io/tls
+    files:
+      - tls.crt=certs/tls.crt
+      - tls.key=certs/tls.key
+    options:
+      disableNameSuffixHash: true

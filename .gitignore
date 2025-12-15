@@ -9,3 +9,6 @@ sm-data/
 frontend/
 *.coverage
 htmlcov/
+SM-k8s/k8s/networking/base/certs/
+SM-k8s/k8s/overlays/dev/secrets.env
+**/secrets.env

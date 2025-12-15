@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tenant-controller
+  namespace: tenant-controller
+  labels:
+    app: tenant-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tenant-controller
+  template:
+    metadata:
+      labels:
+        app: tenant-controller
+    spec:
+      serviceAccountName: tenant-controller-account
+      containers:
+        - name: tenant-controller
+          image: controller
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+          env:
+            - name: pgress_password
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: POSTGRES_PASSWORD
+            - name: SM_DB_CONNECTION
+              value: "postgresql://postgres:$(pgress_password)@postgresql.www.svc.cluster.local:5432/postgres"

@@ -1,0 +1,17 @@
+resources:
+  - ../../base
+
+patches:
+  - path: dev-deployment-patch.yaml
+    target:
+      kind: Deployment
+      name: server-manager-deployment
+      namespace: www
+
+secretGenerator:
+  - name: server-manager-secrets
+    namespace: www
+    envs:
+      - secrets.env
+    options:
+      disableNameSuffixHash: true   

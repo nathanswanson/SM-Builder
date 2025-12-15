@@ -1,0 +1,9 @@
+resources:
+  - ../../base
+
+secretGenerator:
+  - name: postgresql-secret
+    namespace: tenant-controller
+    literals:
+      - POSTGRES_PASSWORD=admin
+      

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-manager-deployment
+  namespace: www
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-manager-deployment
+  template:
+    metadata:
+      labels:
+        app: server-manager-deployment
+    spec:
+      serviceAccountName: servermanager-account
+      nodeSelector:
+        role: core
+      tolerations:
+        - key: "node-role.kubernetes.io/control-node"
+          operator: "Exists"
+          effect: "NoSchedule"
+      containers:
+        - name: server-manager
+          image: ghcr.io/nathanswanson/server-manager:main
+          env:
+            - name: dbpassword
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: POSTGRES_PASSWORD
+            - name: SM_DB_CONNECTION
+              value: "postgresql://postgres:$(dbpassword)@postgresql:5432/postgres"
+            - name: SM_K8S
+              value: "true"
+            - name: SM_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: server-manager-secrets
+                  key: SM_SECRET_KEY
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1"
+            limits:
+              memory: "1Gi"
+              cpu: "2"
+          ports:
+            - containerPort: 8000

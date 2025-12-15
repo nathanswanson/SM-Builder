@@ -1,0 +1,16 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: game-server-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.0.81
+  share: /volume1/k8s/tenants
+  # Each PVC gets a unique subdir based on PVC name
+  subDir: ${pvc.metadata.namespace}/${pvc.metadata.name}
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+mountOptions:
+  - nfsvers=4.1
+  - hard
+  - noatime

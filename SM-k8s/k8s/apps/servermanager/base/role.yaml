@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: servermanager-role
+  namespace: www
+rules:
+  # Minimal permissions - server-manager primarily uses PostgreSQL
+  # Add K8s permissions here only if needed for status/health checks
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]

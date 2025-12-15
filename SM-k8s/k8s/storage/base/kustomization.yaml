@@ -1,0 +1,4 @@
+resources:
+  - postgres-pv.yaml
+  - postgres-pvc.yaml
+  - tenant-storage-class.yaml
