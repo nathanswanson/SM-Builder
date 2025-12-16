@@ -14,12 +14,6 @@ spec:
       labels:
         app: postgresql
     spec:
-      # nodeSelector:
-      #   role: core
-      # tolerations:
-      #   - key: "node-role.kubernetes.io/control-node"
-      #     operator: "Exists"
-      #     effect: "NoSchedule"
       containers:
         - name: postgresql
           image: postgres:18.0

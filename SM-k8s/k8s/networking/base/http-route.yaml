@@ -23,6 +23,13 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /adminer/
+      backendRefs:
+        - name: adminer-service
+          port: 80
+    - matches:
+        - path:
+            type: PathPrefix
             value: /
       backendRefs:
         - name: frontend-service

@@ -324,7 +324,7 @@ def reconcile_server(
     server: ServerConfig,
     core_api: kubernetes.client.CoreV1Api,
     apps_api: kubernetes.client.AppsV1Api,
-    storage_class: str = "game-server-nfs",
+    storage_class: str = "tenant-storage-class",
 ):
     """Reconcile K8s resources for a single server."""
     # missing data must fail fast
